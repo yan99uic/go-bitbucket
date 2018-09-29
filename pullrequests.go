@@ -80,6 +80,26 @@ func (p *PullRequests) GetComment(po *PullRequestsOptions) (interface{}, error) 
 	return p.c.execute("GET", urlStr, "")
 }
 
+func (p *PullRequests) AddComment(po *PullRequestsOptions) (interface{}, error) {
+	data := p.buildPullRequestComment(po)
+	urlStr := GetApiBaseURL() + "/repositories/" + po.Owner + "/" + po.RepoSlug + "/pullrequests/" + po.ID + "/comments/"
+	return p.c.execute("POST", urlStr, data)
+}
+
+func (p *PullRequests) buildPullRequestComment(po *PullRequestsOptions) string {
+
+	body := map[string]interface{}{}
+	body["content"] = map[string]interface{}{"raw": po.Message}
+
+	data, err := json.Marshal(body)
+	if err != nil {
+		pp.Println(err)
+		os.Exit(9)
+	}
+
+	return string(data)
+}
+
 func (p *PullRequests) buildPullRequestBody(po *PullRequestsOptions) string {
 
 	body := map[string]interface{}{}
