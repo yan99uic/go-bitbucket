@@ -87,17 +87,11 @@ func (p *PullRequests) AddComment(po *PullRequestsOptions) (interface{}, error) 
 }
 
 func (p *PullRequests) buildPullRequestComment(po *PullRequestsOptions) string {
-
-	body := map[string]interface{}{}
-	body["content"] = map[string]interface{}{"raw": po.Message}
-
-	data, err := json.Marshal(body)
-	if err != nil {
-		pp.Println(err)
-		os.Exit(9)
-	}
-
-	return string(data)
+	rawMessasge := strings.Replace(po.Message, `"`, `\"`, -1)
+	rawMessasge = strings.Replace(rawMessasge, `_`, `\\_`, -1)
+	rawMessasge = strings.Replace(rawMessasge, `+`, `\\+`, -1)
+	rawMessasge = strings.Replace(rawMessasge, "\n", `\n\n`, -1)
+	return fmt.Sprintf("{\"content\":{\"raw\":\"%s\"}}", rawMessasge)
 }
 
 func (p *PullRequests) buildPullRequestBody(po *PullRequestsOptions) string {
