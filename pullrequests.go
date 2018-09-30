@@ -2,8 +2,9 @@ package bitbucket
 
 import (
 	"encoding/json"
-	"os"
 	"fmt"
+	"os"
+	"strings"
 
 	"github.com/k0kubun/pp"
 )
