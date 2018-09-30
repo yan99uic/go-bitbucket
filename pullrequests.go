@@ -91,7 +91,7 @@ func (p *PullRequests) AddComment(po *PullRequestsOptions) (interface{}, error) 
 func (p *PullRequests) buildPullRequestComment(po *PullRequestsOptions) string {
 	rawMessasge := strings.Replace(po.Message, `"`, `\"`, -1)
 	rawMessasge = strings.Replace(rawMessasge, `_`, `\_`, -1)
-	rawMessasge = strings.Replace(rawMessasge, `+`, `\+`, -1)
+	rawMessasge = strings.Replace(rawMessasge, `+`, `\\+`, -1)
 	rawMessasge = strings.Replace(rawMessasge, "\n", `\n\n`, -1)
 	return fmt.Sprintf("{\"content\":{\"raw\":\"%s\"}}", rawMessasge)
 }
